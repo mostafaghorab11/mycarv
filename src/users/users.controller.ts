@@ -11,6 +11,10 @@ import {
   Session,
   UseGuards,
 } from '@nestjs/common';
+<<<<<<< Updated upstream
+=======
+import { AuthGuard } from '../guards/auth.guard';
+>>>>>>> Stashed changes
 import { Serialize } from '../interceptors/serialize-interceptor';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
