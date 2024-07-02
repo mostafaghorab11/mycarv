@@ -11,8 +11,7 @@ import {
   Session,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from 'src/guards/auth.guard';
-import { Serialize } from 'src/interceptors/serialize-interceptor';
+import { Serialize } from '../interceptors/serialize-interceptor';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -20,6 +19,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('auth')
 // we use it to hide password
@@ -56,7 +56,7 @@ export class UsersController {
   }
 
   @Get('/:id')
-  async findOne(@Param('id') id: string) {
+  async findUser(@Param('id') id: string) {
     const user = await this.userService.findOne(+id);
     if (!user) {
       throw new NotFoundException(`User with id ${id} not found.`);
@@ -65,7 +65,7 @@ export class UsersController {
   }
 
   @Get()
-  async findAll(@Query('email') email: string) {
+  async findAllUsers(@Query('email') email: string) {
     return await this.userService.find(email);
   }
 

@@ -17,14 +17,19 @@ export class AuthService {
     if (existingUser.length > 0) {
       throw new BadRequestException('User already exists');
     }
-    return this.userService.create(email, password);
+    // create a new user with hashed password
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    return this.userService.create(email, hashedPassword);
   }
 
   async login(email: string, password: string) {
     // find user and check password
     const [user] = await this.userService.find(email);
-    if (!user || !bcrypt.compareSync(password, user.password)) {
-      throw new NotFoundException('Invalid credentials');
+    if (!user) {
+      throw new NotFoundException('No user found');
+    }
+    if (!bcrypt.compareSync(password, user.password)) {
+      throw new BadRequestException('Wrong password');
     }
     return user;
   }
