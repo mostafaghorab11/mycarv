@@ -17,7 +17,9 @@ export class AuthService {
     if (existingUser.length > 0) {
       throw new BadRequestException('User already exists');
     }
-    return this.userService.create(email, password);
+    // create a new user with hashed password
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    return this.userService.create(email, hashedPassword);
   }
 
   async login(email: string, password: string) {
