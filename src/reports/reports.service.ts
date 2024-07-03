@@ -25,16 +25,16 @@ export class ReportsService {
     return this.repo.save(report);
   }
 
-  createEstimate(query: GetEstimateDto, { milage }: GetEstimateDto) {
+  createEstimate({ company, model, lng, lat, year, milage }: GetEstimateDto) {
     return this.repo
       .createQueryBuilder()
       .select('AVG(price)', 'price')
       .where('approved IS TRUE')
-      .andWhere('company = :company', { company: query.company })
-      .andWhere('model = :model', { model: query.model })
-      .andWhere('lng - :lng BETWEEN -5 AND 5', { lng: query.lng })
-      .andWhere('lat - :lat BETWEEN -5 AND 5', { lat: query.lat })
-      .andWhere('year - :year BETWEEN -3 AND 3', { year: query.year - 1 })
+      .andWhere('company = :company', { company: company })
+      .andWhere('model = :model', { model: model })
+      .andWhere('lng - :lng BETWEEN -5 AND 5', { lng: lng })
+      .andWhere('lat - :lat BETWEEN -5 AND 5', { lat: lat })
+      .andWhere('year - :year BETWEEN -3 AND 3', { year: year - 1 })
       .orderBy('ABS(milage - :milage)', 'DESC')
       .setParameters({ milage })
       .limit(3)
