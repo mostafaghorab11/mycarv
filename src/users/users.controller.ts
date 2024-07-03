@@ -11,10 +11,7 @@ import {
   Session,
   UseGuards,
 } from '@nestjs/common';
-<<<<<<< Updated upstream
-=======
 import { AuthGuard } from '../guards/auth.guard';
->>>>>>> Stashed changes
 import { Serialize } from '../interceptors/serialize-interceptor';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
@@ -23,7 +20,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
-import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('auth')
 // we use it to hide password
